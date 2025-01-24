@@ -74,7 +74,7 @@
     .container {
         text-align: center;
         width: 90%;
-        max-width: 900px;
+        max-width: 800px;
         background-color: rgba(255, 255, 255, 0.8); /* Set the rectangle to semi-transparent */
         padding: 10px;
         border-radius: 20px;
@@ -105,7 +105,7 @@
     margin-top: 30px;
     width: 90%;
     height: 200px;
-    max-width: 900px;
+    max-width: 800px;
     gap: 360px;
     position: absolute;
     top: 410px; /* Adjust this value to position the buttons as needed */
@@ -188,7 +188,7 @@
     justify-content: space-between;
     margin-top: 20px;
     width: 90%;
-    max-width: 900px;
+    max-width: 800px;
     gap: 5px;
     position: fixed;
     bottom: 50px; /* Positionne les boutons à 100px du bas */
