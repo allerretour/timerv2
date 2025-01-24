@@ -106,7 +106,7 @@
     width: 90%;
     height: 150px;
     max-width: 800px;
-    gap: 360px;
+    gap: 100px;
     position: absolute;
     top: 410px; /* Adjust this value to position the buttons as needed */
     left: 50%;
