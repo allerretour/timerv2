@@ -255,9 +255,6 @@ function adjustUI() {
     const extensionButtons = document.querySelectorAll('.extension-buttons-group button');
     const bottomButtons = document.querySelector('.bottom-buttons');
 
-    // Get container position
-    const containerRect = container.getBoundingClientRect();
-
     // Check if bottom buttons are visible
     const isVisible = bottomButtons.getBoundingClientRect().height > 0;
 
@@ -267,12 +264,14 @@ function adjustUI() {
     // Adjust countdown font size
     countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 280px)";
 
-    // Adjust extension buttons container size
+    // Keep the extension buttons group at 410px or 450px
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
-    extensionGroup.style.height = isVisible ? "120px" : "180px"; // Adjust height
-    extensionGroup.style.top = isVisible ? "410px" : "450px";
+    extensionGroup.style.position = "absolute";
+    extensionGroup.style.top = isVisible ? "450px" : "410px"; // Adjust between 410px & 450px
+    extensionGroup.style.left = "50%";
+    extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
-    // Adjust extension button sizes dynamically
+    // Adjust extension buttons size
     extensionButtons.forEach(button => {
         button.style.fontSize = isVisible ? "80px" : "100px"; // Adjust icon size
         button.style.padding = isVisible ? "10px 15px" : "20px 25px"; // Adjust padding
@@ -295,6 +294,7 @@ observer.observe(bottomButtons);
 // Run on page load and resize
 window.addEventListener('load', adjustUI);
 window.addEventListener('resize', adjustUI);
+
 
 
     
