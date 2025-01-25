@@ -259,14 +259,15 @@ function adjustUI() {
     const isVisible = bottomButtons.getBoundingClientRect().height > 0;
 
     // Adjust container width
-    container.style.maxWidth = isVisible ? "800px" : "1000px";
+    container.style.maxWidth = isVisible ? "800px" : "1100px";
 
     // Adjust countdown font size
     countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 280px)";
 
     // Adjust extension buttons container
-    extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
+    extensionGroup.style.maxWidth = isVisible ? "800px" : "1100px";
     extensionGroup.style.height = isVisible ? "120px" : "180px"; // Adjust height of the group
+    extensionGroup.style.top = isVisible ? "410px" : "450px";
 
     // Adjust extension button size
     extensionButtons.forEach(button => {
