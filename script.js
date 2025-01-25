@@ -221,7 +221,7 @@ function toggleVisibility() {
 
 
 document.addEventListener("keydown", function (event) {
-    if (["1", "2", "ArrowRight", "r", "p"].includes(event.key)) {
+    if (["1", "2", "b", "r", "p","z"].includes(event.key)) {
         event.preventDefault(); // Stops default browser actions
     }
 
@@ -240,6 +240,9 @@ document.addEventListener("keydown", function (event) {
             break;
         case "p":
             pauseTimer();
+            break;
+        case "z":
+            toggleVisibility();
             break;
     }
 });
