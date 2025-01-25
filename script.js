@@ -89,10 +89,7 @@ initialTime = parseInt(document.getElementById('initialTime').value);
 function resetTimer() {
     countdownTime = initialTime;  // Réinitialiser le timer à la valeur initiale
     updateCountdown();            // Mettre à jour l'affichage du timer
-    clearInterval(countdownInterval);  // Stopper le timer
-    isPaused = true;              // Mettre le timer en pause
-    document.getElementById('pauseButton').innerHTML = '<i class="fas fa-play"></i>'; // Mettre le texte en "Reprendre"
-    document.getElementById('pauseButton').classList.add('highlight'); // Ajouter l'effet de clignotement
+    pauseTimer()
     document.getElementById('addButton').disabled = false;  // Réactiver le bouton "X Joueur 1"
     document.getElementById('addButton2').disabled = false; // Réactiver le bouton "X Joueur 2"
 }
@@ -103,10 +100,12 @@ function pauseTimer() {
     if (isPaused) {
         clearInterval(countdownInterval);  // Arrêter le timer
         pauseButton.innerHTML = '<i class="fas fa-play"></i>';  // Changer le texte en "Reprendre"
+        countdown.classList.add('highlight');
         pauseButton.classList.add('highlight');  // Ajouter l'effet de clignotement lorsque le bouton est en mode "Reprendre"
     } else {
         startTimer();  // Démarrer le timer
         pauseButton.innerHTML = '<i class="fas fa-pause"></i>';  // Changer le texte en "Pause"
+        countdown.classList.remove('highlight');
         pauseButton.classList.remove('highlight');  // Retirer l'effet de clignotement lorsque le bouton est en mode "Pause"
 beepSound.play()
 beepSound.pause()
@@ -163,6 +162,7 @@ function updateCountdown() {
             modal.classList.add('show');
             modalContent.classList.add('show');
         }, 10);
+        
     }
 
     function closeSettings(event) {
@@ -248,14 +248,54 @@ document.addEventListener("keydown", function (event) {
 });
 
 
+function adjustUI() {
+    const container = document.querySelector('.container');
+    const countdown = document.querySelector('.countdown');
+    const extensionButtons = document.querySelectorAll('.extension-buttons-group button');
+    const extensionGroup = document.querySelector('.extension-buttons-group');
+    const bottomButtons = document.querySelector('.bottom-buttons');
+
+    // Check if bottom buttons are visible
+    const isVisible = bottomButtons.getBoundingClientRect().height > 0;
+
+    // Adjust container width
+    container.style.maxWidth = isVisible ? "800px" : "1000px";
+
+    // Adjust countdown font size
+    countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 280px)";
+
+    // Adjust extension buttons container
+    extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
+    extensionGroup.style.height = isVisible ? "120px" : "180px"; // Adjust height of the group
+
+    // Adjust extension button size
+    extensionButtons.forEach(button => {
+        button.style.fontSize = isVisible ? "80px" : "100px"; // Adjust icon size
+        button.style.padding = isVisible ? "10px 15px" : "20px 25px"; // Adjust padding
+        button.style.width = isVisible ? "40%" : "48%"; // Adjust width
+        button.style.height = isVisible ? "120px" : "150px"; // Adjust height
+        button.style.borderRadius = isVisible ? "10px" : "15px"; // Adjust border radius
+    });
+}
+
+// Observe visibility changes using IntersectionObserver
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        adjustUI();
+    });
+}, { threshold: 0 });
+
+const bottomButtons = document.querySelector('.bottom-buttons');
+observer.observe(bottomButtons);
+
+// Run on page load and resize
+window.addEventListener('load', adjustUI);
+window.addEventListener('resize', adjustUI);
 
     
 window.onload = function() {
     updateCountdown(); // Juste mettre à jour l'affichage
-    isPaused = true; // Le timer reste en pause
-    let pauseButton = document.getElementById('pauseButton');
-    pauseButton.innerHTML = '<i class="fas fa-play"></i>';
-    pauseButton.classList.add('highlight'); // Appliquer la couleur orange et l'animation de clignotement
+    pauseTimer()
 
 
 // Select the first preset button

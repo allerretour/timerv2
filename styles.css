@@ -87,7 +87,7 @@
 
     .countdown {
         font-size: clamp(90px, 25vw, 260px);
-
+        border-radius: 20px;
         font-weight: bold;
         transition: color 0.3s ease;
         margin-bottom: 5px;
@@ -229,8 +229,8 @@
 }
 
 .highlight {
-    background-color: #4caf50 !important;
-    color: white;
+    background-color: hsl(0, 0%, 48%) !important;
+    color: #e1e1e1;
     animation: blink 1s infinite; /* Animation de clignotement */
 }
 
