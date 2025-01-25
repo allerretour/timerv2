@@ -251,25 +251,33 @@ document.addEventListener("keydown", function (event) {
 function adjustUI() {
     const container = document.querySelector('.container');
     const countdown = document.querySelector('.countdown');
-    const extensionButtons = document.querySelectorAll('.extension-buttons-group button');
     const extensionGroup = document.querySelector('.extension-buttons-group');
+    const extensionButtons = document.querySelectorAll('.extension-buttons-group button');
     const bottomButtons = document.querySelector('.bottom-buttons');
+
+    // Get container position
+    const containerRect = container.getBoundingClientRect();
+    
+    // Position the extension buttons group 5px below the container
+    extensionGroup.style.position = "absolute";
+    extensionGroup.style.top = `${containerRect.bottom + 5}px`; // 5px below container
+    extensionGroup.style.left = "50%";
+    extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
     // Check if bottom buttons are visible
     const isVisible = bottomButtons.getBoundingClientRect().height > 0;
 
     // Adjust container width
-    container.style.maxWidth = isVisible ? "800px" : "1100px";
+    container.style.maxWidth = isVisible ? "800px" : "1000px";
 
     // Adjust countdown font size
     countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 280px)";
 
-    // Adjust extension buttons container
-    extensionGroup.style.maxWidth = isVisible ? "800px" : "1100px";
-    extensionGroup.style.height = isVisible ? "120px" : "180px"; // Adjust height of the group
-    extensionGroup.style.top = isVisible ? "410px" : "450px";
+    // Adjust extension buttons container size
+    extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
+    extensionGroup.style.height = isVisible ? "120px" : "180px"; // Adjust height
 
-    // Adjust extension button size
+    // Adjust extension button sizes dynamically
     extensionButtons.forEach(button => {
         button.style.fontSize = isVisible ? "80px" : "100px"; // Adjust icon size
         button.style.padding = isVisible ? "10px 15px" : "20px 25px"; // Adjust padding
@@ -279,7 +287,7 @@ function adjustUI() {
     });
 }
 
-// Observe visibility changes using IntersectionObserver
+// Observe changes in bottom-buttons visibility
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         adjustUI();
@@ -292,6 +300,7 @@ observer.observe(bottomButtons);
 // Run on page load and resize
 window.addEventListener('load', adjustUI);
 window.addEventListener('resize', adjustUI);
+
 
     
 window.onload = function() {
