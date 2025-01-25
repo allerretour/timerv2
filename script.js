@@ -204,6 +204,48 @@ function closeInstructions(event) {
 }
 
 
+function toggleVisibility() {
+    const bottomButtons = document.querySelector('.bottom-buttons');
+    const toggleButton = document.getElementById('toggleButtons');
+
+    if (bottomButtons.style.display === "none") {
+        bottomButtons.style.display = "flex"; // Show bottom buttons
+        toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Change icon to eye-slash
+    } else {
+        bottomButtons.style.display = "none"; // Hide bottom buttons
+        toggleButton.innerHTML = '<i class="fas fa-eye"></i>'; // Change icon to eye
+    }
+}
+
+
+
+
+document.addEventListener("keydown", function (event) {
+    if (["1", "2", "ArrowRight", "r", "p"].includes(event.key)) {
+        event.preventDefault(); // Stops default browser actions
+    }
+
+    switch (event.key) {
+        case "1":
+            addTime('addButton');
+            break;
+        case "2":
+            addTime('addButton2');
+            break;
+        case "b":
+            resetToNextValue();
+            break;
+        case "r":
+            resetTimer();
+            break;
+        case "p":
+            pauseTimer();
+            break;
+    }
+});
+
+
+
     
 window.onload = function() {
     updateCountdown(); // Juste mettre à jour l'affichage
