@@ -257,12 +257,6 @@ function adjustUI() {
 
     // Get container position
     const containerRect = container.getBoundingClientRect();
-    
-    // Position the extension buttons group 5px below the container
-    extensionGroup.style.position = "absolute";
-    extensionGroup.style.top = `${containerRect.bottom + 5}px`; // 5px below container
-    extensionGroup.style.left = "50%";
-    extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
     // Check if bottom buttons are visible
     const isVisible = bottomButtons.getBoundingClientRect().height > 0;
@@ -276,6 +270,7 @@ function adjustUI() {
     // Adjust extension buttons container size
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
     extensionGroup.style.height = isVisible ? "120px" : "180px"; // Adjust height
+    extensionGroup.style.top = isVisible ? "410px" : "450px";
 
     // Adjust extension button sizes dynamically
     extensionButtons.forEach(button => {
