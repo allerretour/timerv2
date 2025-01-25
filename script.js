@@ -267,7 +267,7 @@ function adjustUI() {
     // Keep the extension buttons group at 410px or 450px
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
     extensionGroup.style.position = "absolute";
-    extensionGroup.style.top = isVisible ? "450px" : "410px"; // Adjust between 410px & 450px
+    extensionGroup.style.top = isVisible ? "420px" : "460px"; // Adjust between 410px & 450px
     extensionGroup.style.left = "50%";
     extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
