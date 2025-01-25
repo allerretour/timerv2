@@ -267,16 +267,16 @@ function adjustUI() {
     // Keep the extension buttons group at 410px or 450px
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
     extensionGroup.style.position = "absolute";
-    extensionGroup.style.top = isVisible ? "420px" : "460px"; // Adjust between 410px & 450px
+    extensionGroup.style.top = isVisible ? "420px" : "490px"; // Adjust between 410px & 450px
     extensionGroup.style.left = "50%";
     extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
     // Adjust extension buttons size
     extensionButtons.forEach(button => {
-        button.style.fontSize = isVisible ? "80px" : "100px"; // Adjust icon size
+        button.style.fontSize = isVisible ? "60px" : "100px"; // Adjust icon size
         button.style.padding = isVisible ? "10px 15px" : "20px 25px"; // Adjust padding
         button.style.width = isVisible ? "40%" : "48%"; // Adjust width
-        button.style.height = isVisible ? "120px" : "150px"; // Adjust height
+        button.style.height = isVisible ? "100px" : "150px"; // Adjust height
         button.style.borderRadius = isVisible ? "10px" : "15px"; // Adjust border radius
     });
 }
