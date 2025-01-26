@@ -79,7 +79,7 @@
         padding: 20px;
         border-radius: 20px;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        position: absolute; /* Positionner le timer en haut de la page */
+        position: fixed;
         top: 40px; /* Laisser un espace du haut de la page */
         left: 50%; /* Centrer horizontalement */
         transform: translateX(-50%); /* Centrer parfaitement */
