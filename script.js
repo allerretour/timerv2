@@ -267,7 +267,7 @@ function adjustUI() {
     // Keep the extension buttons group at 410px or 450px
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
     extensionGroup.style.position = "absolute";
-    extensionGroup.style.bottom = isVisible ? "100px" : "60px"; // Adjust between 410px & 450px
+    extensionGroup.style.bottom = isVisible ? "120px" : "60px"; // Adjust between 410px & 450px
     extensionGroup.style.left = "50%";
     extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
@@ -300,6 +300,7 @@ window.addEventListener('resize', adjustUI);
     
 window.onload = function() {
     updateCountdown(); // Juste mettre à jour l'affichage
+    isPaused = true
     pauseTimer()
 
 
