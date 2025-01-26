@@ -262,12 +262,12 @@ function adjustUI() {
     container.style.maxWidth = isVisible ? "800px" : "1000px";
 
     // Adjust countdown font size
-    countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 280px)";
+    countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 300px)";
 
     // Keep the extension buttons group at 410px or 450px
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
     extensionGroup.style.position = "absolute";
-    extensionGroup.style.top = isVisible ? "420px" : "490px"; // Adjust between 410px & 450px
+    extensionGroup.style.bottom = isVisible ? "100px" : "60px"; // Adjust between 410px & 450px
     extensionGroup.style.left = "50%";
     extensionGroup.style.transform = "translateX(-50%)"; // Center it
 
