@@ -14,7 +14,8 @@
 .small-title {
     position: absolute;
     top: 5px;
-    left: 5px;
+    left: 50%; /* Centrer horizontalement */
+    transform: translateX(-50%); /* Centrer parfaitement */
     font-size: 18px; 
     color: #4caf50;
     margin: 0;

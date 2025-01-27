@@ -91,6 +91,7 @@ initialTime = parseInt(document.getElementById('initialTime').value);
 function resetTimer() {
     countdownTime = initialTime;  // Réinitialiser le timer à la valeur initiale
     updateCountdown();            // Mettre à jour l'affichage du timer
+    isPaused = false;
     pauseTimer()
     document.getElementById('addButton').disabled = false;  // Réactiver le bouton "X Joueur 1"
     document.getElementById('addButton2').disabled = false; // Réactiver le bouton "X Joueur 2"
