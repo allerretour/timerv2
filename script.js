@@ -79,8 +79,8 @@ initialTime = parseInt(document.getElementById('initialTime').value);
     function resetToNextValue() {
     countdownTime = nextTimeValue;
     updateCountdown();
-    isPaused = true;
-    pauseTimer();
+    if (!isPaused) {  // Si le timer n'est pas en pause, démarrer le timer
+        startTimer();
     }
 }
 
@@ -89,8 +89,7 @@ initialTime = parseInt(document.getElementById('initialTime').value);
 function resetTimer() {
     countdownTime = initialTime;  // Réinitialiser le timer à la valeur initiale
     updateCountdown();            // Mettre à jour l'affichage du timer
-    isPaused = true;
-    pauseTimer();
+    pauseTimer()
     document.getElementById('addButton').disabled = false;  // Réactiver le bouton "X Joueur 1"
     document.getElementById('addButton2').disabled = false; // Réactiver le bouton "X Joueur 2"
 }
