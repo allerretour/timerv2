@@ -301,8 +301,8 @@ window.addEventListener('resize', adjustUI);
     
 window.onload = function() {
     updateCountdown(); // Juste mettre à jour l'affichage
-    isPaused = true;
-    pauseTimer();
+    isPaused = true
+    pauseTimer()
 
 
 // Select the first preset button
