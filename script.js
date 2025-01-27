@@ -79,6 +79,8 @@ initialTime = parseInt(document.getElementById('initialTime').value);
     function resetToNextValue() {
     countdownTime = nextTimeValue;
     updateCountdown();
+    isPaused = false;
+    pauseTimer();
     if (!isPaused) {  // Si le timer n'est pas en pause, démarrer le timer
         startTimer();
     }
@@ -217,11 +219,50 @@ function toggleVisibility() {
     }
 }
 
+const fullscreenButton = document.getElementById('fullscreen-btn');
+
+    // Function to check if the document is in fullscreen
+    function isFullscreen() {
+      return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+    }
+
+    // Function to toggle fullscreen
+    function toggleFullscreen() {
+      if (isFullscreen()) {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+          document.msExitFullscreen();
+        }
+      } else {
+        // Enter fullscreen
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+          document.documentElement.msRequestFullscreen();
+        }
+      }
+    }
+
+    
+
+
+
+
 
 
 
 document.addEventListener("keydown", function (event) {
-    if (["1", "2", "b", "r", "p","z"].includes(event.key)) {
+    if (["1", "2", "b", "r", "p","q","z"].includes(event.key)) {
         event.preventDefault(); // Stops default browser actions
     }
 
@@ -241,6 +282,9 @@ document.addEventListener("keydown", function (event) {
         case "p":
             pauseTimer();
             break;
+        case "q":
+            toggleFullscreen();
+            break;    
         case "z":
             toggleVisibility();
             break;
@@ -300,8 +344,8 @@ window.addEventListener('resize', adjustUI);
     
 window.onload = function() {
     updateCountdown(); // Juste mettre à jour l'affichage
-    isPaused = true
-    pauseTimer()
+    isPaused = true;
+    pauseTimer();
 
 
 // Select the first preset button
