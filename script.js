@@ -79,8 +79,8 @@ initialTime = parseInt(document.getElementById('initialTime').value);
     function resetToNextValue() {
     countdownTime = nextTimeValue;
     updateCountdown();
-    if (!isPaused) {  // Si le timer n'est pas en pause, démarrer le timer
-        startTimer();
+    isPaused = true;
+    pauseTimer();
     }
 }
 
@@ -89,7 +89,8 @@ initialTime = parseInt(document.getElementById('initialTime').value);
 function resetTimer() {
     countdownTime = initialTime;  // Réinitialiser le timer à la valeur initiale
     updateCountdown();            // Mettre à jour l'affichage du timer
-    pauseTimer()
+    isPaused = true;
+    pauseTimer();
     document.getElementById('addButton').disabled = false;  // Réactiver le bouton "X Joueur 1"
     document.getElementById('addButton2').disabled = false; // Réactiver le bouton "X Joueur 2"
 }
@@ -300,8 +301,8 @@ window.addEventListener('resize', adjustUI);
     
 window.onload = function() {
     updateCountdown(); // Juste mettre à jour l'affichage
-    isPaused = true
-    pauseTimer()
+    isPaused = true;
+    pauseTimer();
 
 
 // Select the first preset button
