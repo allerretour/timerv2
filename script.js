@@ -7,7 +7,7 @@
 
 
 const beepSound = new Audio('beep-01.mp3');
-    const buzzSound = new Audio('beep-04.mp3');
+const buzzSound = new Audio('beep-04.mp3');
 
 	
     function startTimer() {
@@ -307,7 +307,7 @@ function adjustUI() {
     container.style.maxWidth = isVisible ? "800px" : "1000px";
 
     // Adjust countdown font size
-    countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 300px)";
+    countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 320px)";
 
     // Keep the extension buttons group at 410px or 450px
     extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
@@ -320,7 +320,7 @@ function adjustUI() {
     extensionButtons.forEach(button => {
         button.style.fontSize = isVisible ? "60px" : "100px"; // Adjust icon size
         button.style.padding = isVisible ? "10px 15px" : "20px 25px"; // Adjust padding
-        button.style.width = isVisible ? "40%" : "48%"; // Adjust width
+        button.style.width = isVisible ? "30%" : "50%"; // Adjust width
         button.style.height = isVisible ? "100px" : "150px"; // Adjust height
         button.style.borderRadius = isVisible ? "10px" : "15px"; // Adjust border radius
     });
