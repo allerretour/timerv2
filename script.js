@@ -5,9 +5,40 @@
     let countdownInterval;
     let isPaused = false;
 
+document.getElementById("countdown").addEventListener("click", pauseTimer);
 
 const beepSound = new Audio('beep-01.mp3');
 const buzzSound = new Audio('beep-04.mp3');
+
+function checkViewport() {
+    if (window.innerWidth < 960) {
+      // Save in session that the page was blocked
+      sessionStorage.setItem("blocked", "true");
+
+      // Replace the page content
+      document.body.innerHTML = `
+        <div style="display: flex; height: 100vh; justify-content: center; align-items: center; text-align: center; font-family: Arial, sans-serif; font-size: 1.5rem;">
+          <p>Écran trop petit, utiliser une tablette ou un ordinateur.</p>
+        </div>
+      `;
+    } else {
+      // If the page was previously blocked, force a reload
+      if (sessionStorage.getItem("blocked") === "true") {
+        sessionStorage.removeItem("blocked"); // Clear block state
+        location.reload(); // Reload when moving to a larger screen
+      }
+    }
+  }
+
+  // Run the check on page load
+  checkViewport();
+
+  // Listen for resize events to trigger the check
+  window.addEventListener("resize", checkViewport);
+
+
+
+
 
 	
     function startTimer() {
@@ -38,6 +69,34 @@ initialTime = parseInt(document.getElementById('initialTime').value);
     
 }
 
+let scale = 1;
+
+    function zoomIn() {
+        scale = Math.min(scale + 0.1, 2); // Max zoom level 2x
+        document.body.style.transform = `scale(${scale})`;
+        document.body.style.transformOrigin = "center top";
+    }
+
+    function zoomOut() {
+        scale = Math.max(scale - 0.1, 0.5); // Min zoom level 0.5x
+        document.body.style.transform = `scale(${scale})`;
+        document.body.style.transformOrigin = "center top";
+    }
+
+
+  function toggleBoutonsRonds() {
+    // Targeting the .boutonsronds and .bottom-buttons elements
+    const boutons = document.querySelector('.boutonsronds');
+    const bottomButtons = document.querySelector('.bottom-buttons');
+
+    // Get the current display of .boutonsronds and .bottom-buttons
+    const currentDisplayBoutons = window.getComputedStyle(boutons).display;
+    const currentDisplayBottomButtons = window.getComputedStyle(bottomButtons).display;
+
+    // Toggle display of both elements
+    boutons.style.display = (currentDisplayBoutons === 'none') ? 'block' : 'none';
+    bottomButtons.style.display = (currentDisplayBottomButtons === 'none') ? 'flex' : 'none';
+}
 
 
 
@@ -71,11 +130,6 @@ initialTime = parseInt(document.getElementById('initialTime').value);
     }
 }
 
-    
-
-
-
-
     function resetToNextValue() {
     countdownTime = nextTimeValue;
     updateCountdown();
@@ -103,17 +157,16 @@ function pauseTimer() {
     if (isPaused) {
         clearInterval(countdownInterval);  // Arrêter le timer
         pauseButton.innerHTML = '<i class="fas fa-play"></i>';  // Changer le texte en "Reprendre"
+        
         countdown.classList.add('highlight');
         pauseButton.classList.add('highlight');  // Ajouter l'effet de clignotement lorsque le bouton est en mode "Reprendre"
     } else {
         startTimer();  // Démarrer le timer
         pauseButton.innerHTML = '<i class="fas fa-pause"></i>';  // Changer le texte en "Pause"
+        
         countdown.classList.remove('highlight');
         pauseButton.classList.remove('highlight');  // Retirer l'effet de clignotement lorsque le bouton est en mode "Pause"
-beepSound.play()
-beepSound.pause()
-buzzSound.play()
-buzzSound.pause()
+
     }
 }
 
@@ -176,6 +229,13 @@ function updateCountdown() {
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300);
+
+beepSound.play();
+beepSound.pause();
+buzzSound.play();
+buzzSound.pause();
+
+
     }
 
     function saveSettings() {
@@ -206,19 +266,53 @@ function closeInstructions(event) {
     }, 300);
 }
 
-
 function toggleVisibility() {
     const bottomButtons = document.querySelector('.bottom-buttons');
     const toggleButton = document.getElementById('toggleButtons');
+    const container = document.querySelector('.container');
+    const boutonsRonds = document.querySelectorAll('#fullscreen-btn, #settings-button, #info-button');
+    const secbtnscore = document.querySelector('.extension-buttons-group');
+    const btnscore = document.querySelectorAll('#p1scr, #p2scr');
+    const logoimg = document.querySelector('#middle-image');
+    const nomjoueurs = document.querySelector('.text-variable-section');
+    
 
-    if (bottomButtons.style.display === "none") {
-        bottomButtons.style.display = "flex"; // Show bottom buttons
-        toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Change icon to eye-slash
-    } else {
-        bottomButtons.style.display = "none"; // Hide bottom buttons
-        toggleButton.innerHTML = '<i class="fas fa-eye"></i>'; // Change icon to eye
+    // Check if the buttons are currently hidden
+    const isHidden = toggleButton.innerHTML === '<i class="fas fa-eye"></i>';
+
+    if (isHidden) {
+        bottomButtons.style.opacity  = "0.3";;  // Show the bottom buttons
+        container.classList.remove('hidden');
+        logoimg.style.height = "0px";
+        nomjoueurs.style.top = "15px";
+        nomjoueurs.style.fontSize = "50px";
+        secbtnscore.style.top = "55px"; 
+        btnscore.forEach(button => {
+        button.style.height = "180px"; 
+        button.style.fontSize = "120px"; 
+        });
+
+        
+        toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    }
+ else {
+        bottomButtons.style.opacity  = "0";  // Hide the bottom buttons
+        container.classList.add('hidden');
+        logoimg.style.height = "100px";
+        nomjoueurs.style.top = "30px";
+        nomjoueurs.style.fontSize = "80px";
+        secbtnscore.style.top = "120px";
+        btnscore.forEach(button => {
+        button.style.height = "500px"; 
+        button.style.fontSize = "320px"; 
+        });  
+
+        
+        toggleButton.innerHTML = '<i class="fas fa-eye"></i>';
     }
 }
+
+
 
 const fullscreenButton = document.getElementById('fullscreen-btn');
 
@@ -229,125 +323,91 @@ const fullscreenButton = document.getElementById('fullscreen-btn');
 
     // Function to toggle fullscreen
     function toggleFullscreen() {
-      if (isFullscreen()) {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-          document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-          document.msExitFullscreen();
-        }
-      } else {
-        // Enter fullscreen
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-          document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
-          document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-          document.documentElement.msRequestFullscreen();
-        }
-      }
-    }
+        const elem = document.documentElement;
+        
+        if (isFullscreen()) {
 
+            document.exitFullscreen?.() ||
+            document.mozCancelFullScreen?.() ||
+            document.webkitExitFullscreen?.() ||
+            document.msExitFullscreen?.();
+        } else {
+
+            elem.requestFullscreen?.() ||
+            elem.mozRequestFullScreen?.() ||
+            elem.webkitRequestFullscreen?.() ||
+            elem.msRequestFullscreen?.();
+            
+            elem.focus(); // Ensure focus is maintained
+        }
+    }
+    
+
+    
     
 
 
 
 
-
-
-
-document.addEventListener("keydown", function (event) {
-    if (["1", "2", "b", "r", "p","q","z"].includes(event.key)) {
-        event.preventDefault(); // Stops default browser actions
+    function updateTextVariable(elementId, value) {
+        document.getElementById(elementId).textContent = value;
     }
+    
+    
 
-    switch (event.key) {
-        case "1":
-            addTime('addButton');
-            break;
-        case "2":
-            addTime('addButton2');
-            break;
-        case "b":
-            resetToNextValue();
-            break;
-        case "r":
-            resetTimer();
-            break;
-        case "p":
-            pauseTimer();
-            break;
-        case "q":
-            toggleFullscreen();
-            break;    
-        case "z":
-            toggleVisibility();
-            break;
-    }
+
+document.addEventListener("DOMContentLoaded", function () {
+    let p1Score = 0; // Initial score for Player 1
+    let p2Score = 0; // Initial score for Player 2
+
+    const p1scr = document.getElementById("p1scr");
+    const p1plus = document.getElementById("p1plus");
+    const p1moins = document.getElementById("p1moins");
+
+    const p2scr = document.getElementById("p2scr");
+    const p2plus = document.getElementById("p2plus");
+    const p2moins = document.getElementById("p2moins");
+
+    // Initialize score display
+    p1scr.innerHTML = p1Score;
+    p2scr.innerHTML = p2Score;
+
+    // Player 1 controls
+    p1plus.addEventListener("click", function () {
+        p1Score++;
+        p1scr.innerHTML = p1Score;
+    });
+
+    p1moins.addEventListener("click", function () {
+        if (p1Score > 0) {
+            p1Score--;
+        }
+        p1scr.innerHTML = p1Score;
+    });
+
+    // Player 2 controls
+    p2plus.addEventListener("click", function () {
+        p2Score++;
+        p2scr.innerHTML = p2Score;
+    });
+
+    p2moins.addEventListener("click", function () {
+        if (p2Score > 0) {
+            p2Score--;
+        }
+        p2scr.innerHTML = p2Score;
+    });
 });
-
-
-function adjustUI() {
-    const container = document.querySelector('.container');
-    const countdown = document.querySelector('.countdown');
-    const extensionGroup = document.querySelector('.extension-buttons-group');
-    const extensionButtons = document.querySelectorAll('.extension-buttons-group button');
-    const bottomButtons = document.querySelector('.bottom-buttons');
-
-    // Check if bottom buttons are visible
-    const isVisible = bottomButtons.getBoundingClientRect().height > 0;
-
-    // Adjust container width
-    container.style.maxWidth = isVisible ? "800px" : "1000px";
-
-    // Adjust countdown font size
-    countdown.style.fontSize = isVisible ? "clamp(100px, 20vw, 220px)" : "clamp(120px, 25vw, 320px)";
-
-    // Keep the extension buttons group at 410px or 450px
-    extensionGroup.style.maxWidth = isVisible ? "800px" : "1000px";
-    extensionGroup.style.position = "absolute";
-    extensionGroup.style.bottom = isVisible ? "170px" : "100px"; // Adjust between 410px & 450px
-    extensionGroup.style.left = "50%";
-    extensionGroup.style.transform = "translateX(-50%)"; // Center it
-
-    // Adjust extension buttons size
-    extensionButtons.forEach(button => {
-        button.style.fontSize = isVisible ? "60px" : "100px"; // Adjust icon size
-        button.style.padding = isVisible ? "10px 15px" : "20px 25px"; // Adjust padding
-        button.style.width = isVisible ? "30%" : "50%"; // Adjust width
-        button.style.height = isVisible ? "100px" : "150px"; // Adjust height
-        button.style.borderRadius = isVisible ? "10px" : "15px"; // Adjust border radius
-    });
-}
-
-// Observe changes in bottom-buttons visibility
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        adjustUI();
-    });
-}, { threshold: 0 });
-
-const bottomButtons = document.querySelector('.bottom-buttons');
-observer.observe(bottomButtons);
-
-// Run on page load and resize
-window.addEventListener('load', adjustUI);
-window.addEventListener('resize', adjustUI);
-
-
-
     
 window.onload = function() {
+
+    
+
     updateCountdown(); // Juste mettre à jour l'affichage
     isPaused = true;
     pauseTimer();
-
+    requestAnimationFrame(pollGamepad); // Start listening for gamepad input
+    openSettings()
 
 // Select the first preset button
         const firstPresetButton = document.querySelector('.preset-button');
@@ -356,8 +416,8 @@ window.onload = function() {
         if (firstPresetButton) {
             setPreset(60, 30, 30, firstPresetButton);
         }
+ 
+    toggleVisibility();  
     
 
 };
-
-

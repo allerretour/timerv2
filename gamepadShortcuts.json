@@ -1,0 +1,15 @@
+{
+    "2": "1",   // A button → Add Time Player 1
+    "1": "2",   // B button → Add Time Player 2
+    "0": "b",   // X button → Reset to Next Value
+    "3": "r",   // Y button → Reset Timer
+    "9": "p",   // Start button → Pause
+    "12": "q",  // Select button → Fullscreen
+    "13": "z",  // D-Pad Down → Toggle UI
+    "4": "s",   // D-Pad Right → p1plus
+    "6": "x",   // D-Pad Left → p1moins
+    "5": "d",   // D-Pad Up → p2plus
+    "14": "4",  // L2 → p2moins
+    "15": "3",  // R2 → zoomIn
+    "7": "c"    // L1 → zoomOut
+}
